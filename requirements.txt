@@ -1,2 +1,8 @@
-requirements
-PyPDF2
+pip
+ipython
+
+requests
+requests-cache
+
+tabula-py
+tabulate
