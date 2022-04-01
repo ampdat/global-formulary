@@ -1,6 +1,8 @@
 pip
 ipython
 
+python-dotenv
+
 requests
 requests-cache
 
