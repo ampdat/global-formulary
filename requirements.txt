@@ -8,3 +8,6 @@ requests-cache
 
 tabula-py
 tabulate
+
+lxml
+beautifulsoup4

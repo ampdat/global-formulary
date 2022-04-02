@@ -4,7 +4,6 @@ Scrape UK Formulary
 import os
 import re
 import dotenv
-
 import requests_cache
 
 import tabula
@@ -39,6 +38,7 @@ if __name__ == "__main__":
     names = list([i.lower() for d in drugs for i in re.findall("[A-Z]+", d)])
     print(f"Extracted {len(drugs)} drugs...")
 
+    print("Writing data...")
     with open("data/uk.txt", "w") as f:
         f.write("\n".join(names))
 
