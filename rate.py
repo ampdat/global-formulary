@@ -10,13 +10,14 @@ if __name__ == "__main__":
 
     print("Reading data...")
 
-    formularies = [
-        open(path).read().splitlines() for path in [
-            "data/fda.txt",
-            "data/ca.txt",
-            "data/uk.txt",
-        ]
-    ]
+    fda = set(open("data/fda.txt").read().splitlines())
+    print(f"Found {len(fda)} FDA terms...")
 
-    common = set.intersection(*[set(list) for list in formularies])
-    print(f"Found {len(common)} common drugs...")
+    formularies = {
+        country_code: set(open(f"data/{country_code}.txt").read().splitlines())
+        for country_code in ["de", "ca", "uk"]
+    }
+
+    print("Gross intersections with FDA:")
+    for key, values in formularies.items():
+        print(f"{key}: {len(fda.intersection(values)) / len(fda):.2f}")
