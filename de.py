@@ -16,8 +16,8 @@ if __name__ == "__main__":
     dotenv.load_dotenv()
     os.makedirs("data", exist_ok=True)
 
-    session = requests_cache.CachedSession("data/http_cache")
     print("Downloading data...")
+    session = requests_cache.CachedSession("data/http_cache")
     r = session.get(
         "https://www.bfarm.de/SharedDocs/Downloads/DE/Arzneimittel/Zulassung/amInformationen/Festbetraege/2022/festbetraege-20220401.pdf?__blob=publicationFile",
         stream=True)
@@ -28,7 +28,6 @@ if __name__ == "__main__":
     tables = tabula.read_pdf(r.raw, pages=pages)
 
     print("Extracting terms...")
-
     drugs = pd.concat([t.iloc[:, 0] for t in tables]) \
         .dropna() \
         .drop_duplicates()
@@ -42,7 +41,7 @@ if __name__ == "__main__":
     print(f"Extracted {len(terms)} terms...")
 
     print("Writing data...")
-    with open("data/de.txt", "w") as f:
+    with open("data/de.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(terms))
 
     print("Done!")
