@@ -14,7 +14,9 @@ if __name__ == "__main__":
     print("Scraping German Formulary")
 
     dotenv.load_dotenv()
-    os.makedirs("data", exist_ok=True)
+
+    prefix = "debug" if (os.getenv("DEBUG", "True") == "True") else "prod"
+    os.makedirs(f"data/{prefix}", exist_ok=True)
 
     print("Downloading data...")
     session = requests_cache.CachedSession("data/http_cache")
@@ -41,7 +43,7 @@ if __name__ == "__main__":
     print(f"Extracted {len(terms)} terms...")
 
     print("Writing data...")
-    with open("data/de.txt", "w", encoding="utf-8") as f:
+    with open(f"data/{prefix}/de.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(terms))
 
     print("Done!")

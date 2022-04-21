@@ -14,9 +14,10 @@ if __name__ == "__main__":
     print("Scraping UK Formulary")
 
     dotenv.load_dotenv()
-    os.makedirs("data", exist_ok=True)
+    prefix = "debug" if (os.getenv("DEBUG", "True") == "True") else "prod"
+    os.makedirs(f"data/{prefix}", exist_ok=True)
 
-    session = requests_cache.CachedSession("data/http_cache")
+    session = requests_cache.CachedSession(f"data/{prefix}/http_cache")
     print("Downloading data...")
     # MEDICINES NOT REIMBURSED THROUGH NATIONAL PRICES AND
     # DIRECTLY COMMISSIONED BY NHS ENGLAND
@@ -39,7 +40,7 @@ if __name__ == "__main__":
     print(f"Extracted {len(drugs)} drugs...")
 
     print("Writing data...")
-    with open("data/uk.txt", "w") as f:
+    with open(f"data/{prefix}/uk.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(names))
 
     print("Done!")

@@ -10,12 +10,15 @@ if __name__ == "__main__":
 
     print("Reading data...")
 
-    fda = set(open("data/fda.txt").read().splitlines())
+    prefix = "debug" if (os.getenv("DEBUG", "True") == "True") else "prod"
+
+    fda = set(open(f"data/{prefix}/fda.txt").read().splitlines())
     print(f"Found {len(fda)} FDA terms...")
 
     formularies = {
-        country_code: set(open(f"data/{country_code}.txt").read().splitlines())
-        for country_code in ["de", "ca", "uk"]
+        country_code: set(
+            open(f"data/{prefix}/{country_code}.txt").read().splitlines())
+        for country_code in ["ca", "de", "uk"]
     }
 
     print("Gross intersections with FDA:")

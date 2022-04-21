@@ -14,10 +14,12 @@ if __name__ == "__main__":
     print("Downloading FDA list of drugs...")
 
     dotenv.load_dotenv()
-    os.makedirs("data", exist_ok=True)
+
+    prefix = "debug" if (os.getenv("DEBUG", "True") == "True") else "prod"
+    os.makedirs(f"data/{prefix}", exist_ok=True)
 
     print("Downloading data...")
-    session = requests_cache.CachedSession("data/http_cache")
+    session = requests_cache.CachedSession(f"data/{prefix}/http_cache")
     r = session.get("https://www.fda.gov/media/89850/download")
     r.raise_for_status()
 
@@ -36,7 +38,7 @@ if __name__ == "__main__":
     print(f"Extracted {len(terms)} terms...")
 
     print("Writing data...")
-    with open("data/fda.txt", "w", encoding="utf-8") as f:
+    with open(f"data/{prefix}/fda.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(terms))
 
     print("Done!")
