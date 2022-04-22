@@ -13,7 +13,6 @@ if __name__ == "__main__":
     print("Scraping Canadian Formulary")
 
     dotenv.load_dotenv()
-
     prefix = "debug" if (os.getenv("DEBUG", "True") == "True") else "prod"
     os.makedirs(f"data/{prefix}", exist_ok=True)
 
